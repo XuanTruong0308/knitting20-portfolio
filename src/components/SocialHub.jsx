@@ -144,8 +144,8 @@ export default function SocialHub({ streamerConfig }) {
             <div className="flex items-center justify-between border-b border-[#c89b3c]/30 pb-4">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-4 h-4 rounded-full bg-red-500 animate-ping" />
-                  <div className="w-4 h-4 rounded-full bg-red-600 absolute inset-0" />
+                  <div className={`w-4 h-4 rounded-full ${streamerConfig.isLive ? 'bg-red-500 animate-ping' : 'bg-gray-500'}`} />
+                  <div className={`w-4 h-4 rounded-full ${streamerConfig.isLive ? 'bg-red-600' : 'bg-gray-600'} absolute inset-0`} />
                 </div>
                 <div className="text-left">
                   <h3 className="font-cinzel font-bold text-lg text-white">
@@ -157,9 +157,13 @@ export default function SocialHub({ streamerConfig }) {
                 </div>
               </div>
 
-              <div className="px-3 py-1 rounded bg-red-950/60 border border-red-500/60 text-red-400 text-xs font-orbitron font-bold flex items-center gap-1.5 animate-pulse">
+              <div className={`px-3 py-1 rounded text-xs font-orbitron font-bold flex items-center gap-1.5 ${
+                streamerConfig.isLive
+                  ? 'bg-red-950/60 border border-red-500/60 text-red-400 animate-pulse'
+                  : 'bg-[#010a13] border border-[#c89b3c]/30 text-gray-400'
+              }`}>
                 <Radio className="w-3.5 h-3.5" />
-                <span>ON AIR</span>
+                <span>{streamerConfig.isLive ? 'ON AIR' : 'OFFLINE'}</span>
               </div>
             </div>
 
@@ -174,7 +178,7 @@ export default function SocialHub({ streamerConfig }) {
                 <div>
                   <div className="text-base font-cinzel font-bold text-white flex items-center gap-2">
                     {streamerConfig.name} Live Stream
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40">PRO</span>
+                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40">PRO TOP</span>
                   </div>
                   <div className="text-xs text-gray-400 font-sans">
                     Nền tảng: <span className="text-[#00f0ff] font-semibold">TikTok Live</span> • Máy chủ LMHT VN
@@ -182,15 +186,21 @@ export default function SocialHub({ streamerConfig }) {
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed border-t border-[#c89b3c]/20 pt-3">
-                🔴 Đang phát sóng trực tiếp: <strong>Leo rank Thách Đấu, Solo Mid Yasuo/Zed và giao lưu cùng người hâm mộ</strong>. Nhấn vào nút bên dưới để chuyển trực tiếp tới phòng xem livestream!
-              </p>
+              {streamerConfig.isLive ? (
+                <p className="text-xs sm:text-sm text-green-400 font-sans leading-relaxed border-t border-[#c89b3c]/20 pt-3">
+                  🔴 <strong>ĐANG PHÁT SÓNG TRỰC TIẾP:</strong> Leo rank Thách Đấu Đường Trên (Top Lane), duo leo rank và giao lưu cùng fan. Bấm nút bên dưới để vào phòng xem ngay!
+                </p>
+              ) : (
+                <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed border-t border-[#c89b3c]/20 pt-3">
+                  ⚪ <strong>HIỆN ĐANG NGHỈ NGƠI:</strong> Streamer chưa lên sóng. Khung giờ livestream cố định hàng ngày: <strong>20:00 - 00:30</strong>. Hãy bật chuông bên cạnh để nhận thông báo ngay khi mở máy!
+                </p>
+              )}
 
               {/* Status Metrics */}
               <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-rajdhani">
                 <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
-                  <span className="text-gray-400 block text-[10px]">TƯỚNG STREAM:</span>
-                  <span className="text-[#ffd700] font-bold">Yasuo, Zed, Lee Sin</span>
+                  <span className="text-gray-400 block text-[10px]">VAI TRÒ:</span>
+                  <span className="text-[#ffd700] font-bold">Đường Trên (Top Lane)</span>
                 </div>
                 <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
                   <span className="text-gray-400 block text-[10px]">SERVER:</span>
@@ -211,7 +221,7 @@ export default function SocialHub({ streamerConfig }) {
               <svg className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
                 <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
               </svg>
-              <span>VÀO PHÒNG XEM TIKTOK LIVE NGAY</span>
+              <span>{streamerConfig.isLive ? 'VÀO PHÒNG XEM TIKTOK LIVE NGAY' : 'TRUY CẬP KÊNH TIKTOK @HDAN902'}</span>
               <ExternalLink className="w-4 h-4" />
             </a>
 

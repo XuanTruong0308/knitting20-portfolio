@@ -32,7 +32,7 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
               KNITTING20 <span className="text-xs px-1.5 py-0.5 rounded bg-[#0ac8b9]/20 text-[#00f0ff] border border-[#0ac8b9]/40 font-rajdhani font-semibold">PRO</span>
             </div>
             <div className="text-[10px] font-rajdhani uppercase tracking-wider text-gray-400">
-              LOL Streamer & Challenger Mid
+              LOL Streamer & Challenger Top Lane
             </div>
           </div>
         </a>
@@ -40,20 +40,12 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-8">
           <a
-            href="#champions"
-            onMouseEnter={() => soundFx.playHover()}
-            onClick={() => soundFx.playClick()}
-            className="text-sm font-rajdhani font-semibold tracking-wider text-gray-300 hover:text-[#00f0ff] transition-colors"
-          >
-            TƯỚNG TỦ & STATS
-          </a>
-          <a
             href="#socials"
             onMouseEnter={() => soundFx.playHover()}
             onClick={() => soundFx.playClick()}
-            className="text-sm font-rajdhani font-semibold tracking-wider text-gray-300 hover:text-[#00f0ff] transition-colors flex items-center gap-1"
+            className="text-sm font-rajdhani font-semibold tracking-wider text-gray-300 hover:text-[#00f0ff] transition-colors flex items-center gap-1.5"
           >
-            <Radio className="w-3.5 h-3.5 text-red-400 animate-pulse" />
+            <Radio className={`w-3.5 h-3.5 ${isLive ? 'text-red-400 animate-pulse' : 'text-gray-400'}`} />
             TIKTOK LIVE & BẬT CHUÔNG
           </a>
           <a
@@ -81,10 +73,10 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
           <div className={`px-3 py-1 rounded-full text-xs font-rajdhani font-bold flex items-center gap-2 border ${
             isLive 
               ? 'bg-red-950/50 text-red-400 border-red-500/50 animate-pulse' 
-              : 'bg-emerald-950/40 text-emerald-400 border-emerald-500/40'
+              : 'bg-[#091428] text-gray-300 border-[#c89b3c]/30'
           }`}>
-            <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-red-500 animate-ping' : 'bg-emerald-400'}`} />
-            {isLive ? '🔴 ĐANG LIVESTREAM' : '🟢 SẴN SÀNG LEO RANK'}
+            <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-red-500 animate-ping' : 'bg-gray-400'}`} />
+            {isLive ? '🔴 ĐANG LIVESTREAM' : '⚪ OFFLINE (LỊCH: 20:00)'}
           </div>
 
           {/* Sound FX Switcher */}

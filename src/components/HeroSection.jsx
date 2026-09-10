@@ -25,7 +25,7 @@ export default function HeroSection({ streamerConfig }) {
               <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
               <div className="flex items-center gap-2 text-xs font-rajdhani font-bold tracking-widest text-[#00f0ff] uppercase">
                 <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
-                THÁCH ĐẤU VIỆT NAM (1,240 LP) • MID LANER
+                THÁCH ĐẤU VIỆT NAM (1,240 LP) • TOP LANER
               </div>
             </div>
 
