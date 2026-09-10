@@ -340,29 +340,29 @@ export default function HextechCore3D() {
       </div>
 
       {/* Interactive Hextech Core HUD Button */}
-      <div className="absolute -bottom-1 sm:bottom-1 flex flex-col items-center gap-1.5 z-20 pointer-events-auto">
+      <div className="absolute -bottom-1 sm:bottom-1 flex flex-col items-center gap-1 z-20 pointer-events-auto px-2 w-full max-w-sm">
         <button
           onClick={handleSurge}
-          className={`px-4 py-1.5 rounded-full text-xs font-chakra font-bold flex items-center gap-2 border transition-all duration-300 backdrop-blur-md shadow-lg ${
+          className={`w-auto px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-chakra font-bold flex items-center justify-center gap-1.5 sm:gap-2 border transition-all duration-300 backdrop-blur-md shadow-lg ${
             isOvercharged
               ? 'bg-[#00f0ff]/20 text-[#00f0ff] border-[#00f0ff] shadow-hextech-cyan animate-pulse scale-105'
-              : 'bg-[#010a13]/85 text-[#f0e6d2] border-[#c89b3c]/50 hover:border-[#00f0ff] hover:text-[#00f0ff] hover:scale-105'
+              : 'bg-[#010a13]/90 text-[#f0e6d2] border-[#c89b3c]/50 hover:border-[#00f0ff] hover:text-[#00f0ff] hover:scale-105'
           }`}
         >
-          <Zap className={`w-3.5 h-3.5 ${isOvercharged ? 'text-[#00f0ff] animate-bounce' : 'text-[#ffd700]'}`} />
-          <span>
-            {isOvercharged ? '⚡ QUÁ TẢI HEXTECH (OVERCHARGE)' : '⚡ NHẤP ĐỂ NẠP XUNG NĂNG LƯỢNG'}
+          <Zap className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${isOvercharged ? 'text-[#00f0ff] animate-bounce' : 'text-[#ffd700]'}`} />
+          <span className="truncate">
+            {isOvercharged ? '⚡ QUÁ TẢI HEXTECH' : '⚡ NẠP XUNG NĂNG LƯỢNG'}
           </span>
           {surgeCount > 0 && (
-            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-[#00f0ff]/20 text-[#00f0ff] font-mono border border-[#00f0ff]/30">
+            <span className="px-1.5 py-0.2 rounded-full text-[9px] sm:text-[10px] bg-[#00f0ff]/20 text-[#00f0ff] font-mono border border-[#00f0ff]/30 shrink-0">
               x{surgeCount}
             </span>
           )}
         </button>
 
-        <div className="text-[10px] font-chakra tracking-widest text-gray-400 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#0ac8b9] animate-ping" />
-          Kéo chuột để xoay 3D 360° • Click để nạp năng lượng
+        <div className="text-[9px] sm:text-[10px] font-chakra tracking-wider text-gray-400 flex items-center justify-center gap-1 text-center">
+          <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-[#0ac8b9] animate-ping shrink-0" />
+          <span>Kéo xoay 3D 360° • Click để nạp năng lượng</span>
         </div>
       </div>
 
