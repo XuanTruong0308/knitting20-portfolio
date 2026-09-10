@@ -1,36 +1,62 @@
 import React from 'react';
 import { Sparkles, Trophy, Flame, PlayCircle, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 import HextechCore3D from './HextechCore3D';
 import { soundFx } from '../utils/audio';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 25 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
 export default function HeroSection({ streamerConfig }) {
   return (
     <section id="home" className="relative min-h-screen pt-28 pb-16 flex items-center overflow-hidden">
       
       {/* Background Arcane Glow Gradients */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00f0ff]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-[#c89b3c]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-[#00f0ff]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-[#c89b3c]/10 rounded-full blur-[130px] pointer-events-none" />
 
       {/* Hextech Rune Grid Background Lines */}
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#0ac8b9_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
           
           {/* Left Column: Summoner Persona & CTAs */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 space-y-6 text-left"
+          >
             
             {/* Rank Challenger & Role Tag */}
-            <div className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-sm hextech-border">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-sm hextech-border">
               <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
               <div className="flex items-center gap-2 text-xs font-rajdhani font-bold tracking-widest text-[#00f0ff] uppercase">
                 <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
                 THÁCH ĐẤU VIỆT NAM (1,240 LP) • TOP LANER
               </div>
-            </div>
+            </motion.div>
 
             {/* In-Game Name & Title */}
-            <div className="space-y-2">
+            <motion.div variants={itemVariants} className="space-y-2">
               <h1 className="text-4xl sm:text-6xl font-cinzel font-black tracking-tight text-white uppercase leading-none">
                 <span className="text-gold-gradient block">{streamerConfig.name}</span>
                 <span className="text-2xl sm:text-4xl font-rajdhani font-bold text-gray-400 block mt-2">
@@ -40,10 +66,10 @@ export default function HeroSection({ streamerConfig }) {
               <p className="text-gray-300 text-sm sm:text-base font-sans max-w-xl leading-relaxed pt-2">
                 {streamerConfig.bio}
               </p>
-            </div>
+            </motion.div>
 
             {/* Action CTAs (TikTok, Facebook, Donate) */}
-            <div className="flex flex-wrap gap-4 pt-2">
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-2">
               {/* TikTok Channel Button */}
               <a
                 href={streamerConfig.tiktokUrl}
@@ -84,49 +110,48 @@ export default function HeroSection({ streamerConfig }) {
                 <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
                 <span>ỦNG HỘ STREAMER</span>
               </a>
-            </div>
+            </motion.div>
 
             {/* Live Metrics Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#c89b3c]/20">
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded">
+            <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#c89b3c]/20">
+              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#00f0ff]/50 transition-colors">
                 <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#00f0ff]">
                   {streamerConfig.stats.tiktokFollowers}
                 </div>
                 <div className="text-[11px] font-rajdhani uppercase text-gray-400">TikTok Followers</div>
               </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded">
+              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#ffd700]/50 transition-colors">
                 <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#f0e6d2]">
                   {streamerConfig.stats.winRate}
                 </div>
                 <div className="text-[11px] font-rajdhani uppercase text-gray-400">Tỉ Lệ Thắng Ranked</div>
               </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded">
+              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#ffd700]/50 transition-colors">
                 <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#ffd700]">
                   {streamerConfig.stats.pentakills}
                 </div>
                 <div className="text-[11px] font-rajdhani uppercase text-gray-400">Pha Pentakill</div>
               </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded">
+              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#0ac8b9]/50 transition-colors">
                 <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#0ac8b9]">
                   {streamerConfig.stats.kda}
                 </div>
                 <div className="text-[11px] font-rajdhani uppercase text-gray-400">KDA Trung Bình</div>
               </div>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
           {/* Right Column: 3D Interactive Hextech Core Canvas */}
-          <div className="lg:col-span-5 h-[420px] sm:h-[500px] relative flex items-center justify-center">
-            
-            {/* Hextech Magic Circle Ornaments */}
-            <div className="absolute w-[340px] h-[340px] border border-[#c89b3c]/30 rounded-full animate-spin-slow pointer-events-none" />
-            <div className="absolute w-[390px] h-[390px] border border-dashed border-[#00f0ff]/20 rounded-full animate-spin-reverse pointer-events-none" />
-            <div className="absolute w-[440px] h-[440px] border border-[#785a28]/20 rounded-full pointer-events-none" />
-            
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="lg:col-span-5 h-[460px] sm:h-[520px] relative flex items-center justify-center"
+          >
             {/* 3D Core Canvas */}
             <HextechCore3D />
-          </div>
+          </motion.div>
 
         </div>
       </div>

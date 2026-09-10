@@ -14,8 +14,37 @@ import {
   Flame,
   Tv
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { soundFx } from '../utils/audio';
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 35 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  }
+};
+
+const scheduleContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    }
+  }
+};
+
+const scheduleItemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeOut' }
+  }
+};
 
 export default function SocialHub({ streamerConfig }) {
   const [subscribedEmail, setSubscribedEmail] = useState('');
@@ -65,7 +94,7 @@ export default function SocialHub({ streamerConfig }) {
       if (permission === 'granted') {
         setWebPushEnabled(true);
         localStorage.setItem(`live_alert_${streamerConfig.tiktokUsername}`, 'true');
-        soundFx.playLevelUp();
+        soundFx.playDonateSuccess();
         triggerSubscribedConfetti();
         setNotificationMsg('Đã bật chuông! Hệ thống sẽ thông báo thẳng về điện thoại / PC khi bạn lên sóng.');
         
@@ -79,24 +108,34 @@ export default function SocialHub({ streamerConfig }) {
           }
         }
 
-        // Show test greeting notification
-        new Notification(`🔴 ${streamerConfig.name} - Đã Bật Thông Báo!`, {
-          body: `Bạn sẽ nhận được thông báo nổi trên màn hình ngay khi kênh @${streamerConfig.tiktokUsername} bắt đầu phát trực tiếp.`,
-          icon: '/favicon.ico'
-        });
+        // Show sample desktop notification
+        try {
+          new Notification('KNITTING20 - ĐÃ BẬT THÔNG BÁO!', {
+            body: 'Bạn sẽ nhận được thông báo ngay khi streamer phát trực tiếp trên TikTok.',
+            icon: '/icon-192.png',
+            badge: '/icon-192.png',
+            tag: 'welcome-notification'
+          });
+        } catch {
+          // Ignore
+        }
       } else {
-        alert('Vui lòng cho phép quyền thông báo trên trình duyệt (Click biểu tượng ổ khóa cạnh thanh URL -> Cho phép Thông báo).');
+        setNotificationMsg('Bạn đã từ chối quyền thông báo trên trình duyệt. Vui lòng mở quyền trong cài đặt trình duyệt để nhận tin.');
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
+      setNotificationMsg('Không thể kích hoạt thông báo trên thiết bị này.');
     }
+
+    setTimeout(() => {
+      setNotificationMsg('');
+    }, 5000);
   };
 
-  // Handle Email Subscription
+  // Handle Email Live Alert Subscription
   const handleEmailSubscribe = (e) => {
     e.preventDefault();
     if (!subscribedEmail || !subscribedEmail.includes('@')) {
-      alert('Vui lòng nhập địa chỉ email hợp lệ!');
+      alert('Vui lòng nhập địa chỉ email hợp lệ');
       return;
     }
 
@@ -120,8 +159,14 @@ export default function SocialHub({ streamerConfig }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
+        {/* Section Header with Motion */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#091428] border border-[#00f0ff]/40 text-xs font-rajdhani font-bold tracking-widest text-[#00f0ff] uppercase">
             <Radio className="w-3.5 h-3.5 text-red-500 animate-pulse" />
             TIKTOK LIVE STREAM & ALERT CENTER
@@ -132,13 +177,19 @@ export default function SocialHub({ streamerConfig }) {
           <p className="text-gray-400 font-sans text-sm sm:text-base">
             Theo dõi phòng phát sóng trực tiếp TikTok của <strong>{streamerConfig.name}</strong> (@{streamerConfig.tiktokUsername}) và đăng ký nhận chuông báo tự động để không bỏ lỡ những trận leo rank căng thẳng.
           </p>
-        </div>
+        </motion.div>
 
         {/* Live Status & Notification Subscription Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left Column: Live Terminal Card */}
-          <div className="lg:col-span-6 hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/90 relative flex flex-col justify-between space-y-6 shadow-hextech-cyan">
+          <motion.div 
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="lg:col-span-6 hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/90 relative flex flex-col justify-between space-y-6 shadow-hextech-cyan"
+          >
             
             {/* Top Live Indicator */}
             <div className="flex items-center justify-between border-b border-[#c89b3c]/30 pb-4">
@@ -158,145 +209,151 @@ export default function SocialHub({ streamerConfig }) {
               </div>
 
               <div className={`px-3 py-1 rounded text-xs font-orbitron font-bold flex items-center gap-1.5 ${
-                streamerConfig.isLive
-                  ? 'bg-red-950/60 border border-red-500/60 text-red-400 animate-pulse'
-                  : 'bg-[#010a13] border border-[#c89b3c]/30 text-gray-400'
+                streamerConfig.isLive 
+                  ? 'bg-red-950/60 text-red-400 border border-red-500/50 animate-pulse'
+                  : 'bg-[#010a13] text-gray-400 border border-gray-700'
               }`}>
-                <Radio className="w-3.5 h-3.5" />
-                <span>{streamerConfig.isLive ? 'ON AIR' : 'OFFLINE'}</span>
+                {streamerConfig.isLive ? '🔴 ĐANG PHÁT SÓNG' : '⚪ ĐANG NGHỈ NGƠI'}
               </div>
             </div>
 
-            {/* Middle: Live Room Broadcast Hologram */}
-            <div className="p-6 rounded-lg bg-[#010a13] border border-[#00f0ff]/30 text-left space-y-4 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#00f0ff]/10 rounded-full blur-2xl pointer-events-none" />
+            {/* Middle Preview / Hologram Visual */}
+            <div className="p-6 bg-[#010a13] border border-[#00f0ff]/30 rounded-lg relative overflow-hidden text-center space-y-4">
+              <div className="absolute inset-0 scanline pointer-events-none opacity-40" />
               
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full border-2 border-[#00f0ff] p-0.5 shadow-hextech-cyan bg-[#091428] flex items-center justify-center">
-                  <Tv className="w-6 h-6 text-[#00f0ff]" />
-                </div>
-                <div>
-                  <div className="text-base font-cinzel font-bold text-white flex items-center gap-2">
-                    {streamerConfig.name} Live Stream
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40">PRO TOP</span>
-                  </div>
-                  <div className="text-xs text-gray-400 font-sans">
-                    Nền tảng: <span className="text-[#00f0ff] font-semibold">TikTok Live</span> • Máy chủ LMHT VN
-                  </div>
-                </div>
+              <div className="w-16 h-16 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff] text-[#00f0ff] flex items-center justify-center mx-auto shadow-hextech-cyan">
+                {streamerConfig.isLive ? (
+                  <Flame className="w-8 h-8 text-red-500 animate-bounce" />
+                ) : (
+                  <Tv className="w-8 h-8 text-[#00f0ff]" />
+                )}
               </div>
 
-              {streamerConfig.isLive ? (
-                <p className="text-xs sm:text-sm text-green-400 font-sans leading-relaxed border-t border-[#c89b3c]/20 pt-3">
-                  🔴 <strong>ĐANG PHÁT SÓNG TRỰC TIẾP:</strong> Leo rank Thách Đấu Đường Trên (Top Lane), duo leo rank và giao lưu cùng fan. Bấm nút bên dưới để vào phòng xem ngay!
+              <div className="space-y-1">
+                <div className="text-base font-cinzel font-bold text-white flex items-center justify-center gap-2">
+                  <span>{streamerConfig.name}</span>
+                  <span className="text-xs font-mono text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10 border border-[#00f0ff]/30">
+                    {streamerConfig.role}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-400 max-w-md mx-auto leading-relaxed">
+                  {streamerConfig.isLive 
+                    ? 'Streamer đang livestream trực tiếp leo rank Thách Đấu trên TikTok! Vào xem và giao lưu ngay.'
+                    : 'Phát sóng đều đặn mỗi tối từ 20:00 - 23:30. Hãy bấm vào nút bên dưới để chuyển thẳng sang kênh TikTok.'}
                 </p>
-              ) : (
-                <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed border-t border-[#c89b3c]/20 pt-3">
-                  ⚪ <strong>HIỆN ĐANG NGHỈ NGƠI:</strong> Streamer chưa lên sóng. Khung giờ livestream cố định hàng ngày: <strong>20:00 - 00:30</strong>. Hãy bật chuông bên cạnh để nhận thông báo ngay khi mở máy!
-                </p>
-              )}
+              </div>
 
-              {/* Status Metrics */}
+              {/* In-Game Tag Badges */}
               <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-rajdhani">
                 <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
-                  <span className="text-gray-400 block text-[10px]">VAI TRÒ:</span>
-                  <span className="text-[#ffd700] font-bold">Đường Trên (Top Lane)</span>
+                  <span className="text-gray-500">MÁY CHỦ:</span> <strong className="text-[#ffd700]">VIỆT NAM</strong>
                 </div>
                 <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
-                  <span className="text-gray-400 block text-[10px]">SERVER:</span>
-                  <span className="text-[#00f0ff] font-bold">Việt Nam (VN)</span>
+                  <span className="text-gray-500">BẬC RANK:</span> <strong className="text-[#00f0ff]">THÁCH ĐẤU</strong>
                 </div>
               </div>
             </div>
 
-            {/* Direct Link to TikTok Live */}
-            <a
-              href={streamerConfig.tiktokUrl}
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={() => soundFx.playHover()}
-              onClick={() => soundFx.playClick()}
-              className="hextech-btn-cyan py-4 px-6 rounded text-center font-bold text-sm flex items-center justify-center gap-3 shadow-hextech-cyan group w-full"
-            >
-              <svg className="w-5 h-5 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
-              </svg>
-              <span>{streamerConfig.isLive ? 'VÀO PHÒNG XEM TIKTOK LIVE NGAY' : 'TRUY CẬP KÊNH TIKTOK @HDAN902'}</span>
-              <ExternalLink className="w-4 h-4" />
-            </a>
+            {/* Bottom Direct CTA */}
+            <div>
+              <a
+                href={streamerConfig.tiktokUrl}
+                target="_blank"
+                rel="noreferrer"
+                onMouseEnter={() => soundFx.playHover()}
+                onClick={() => soundFx.playClick()}
+                className="w-full hextech-btn-cyan py-3.5 px-6 rounded text-center font-bold text-sm flex items-center justify-center gap-2.5 shadow-hextech-cyan group"
+              >
+                <svg className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
+                </svg>
+                <span>CHUYỂN ĐẾN PHÒNG STREAM TIKTOK</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
 
-          </div>
+          </motion.div>
 
-          {/* Right Column: Live Alert Subscription System */}
-          <div className="lg:col-span-6 hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/90 flex flex-col justify-between space-y-6 shadow-hextech-gold">
+          {/* Right Column: Web Push & Email Live Alert Subscription Center */}
+          <motion.div 
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            className="lg:col-span-6 hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/90 relative flex flex-col justify-between space-y-6 shadow-hextech-gold"
+          >
             
+            {/* Top Title */}
             <div className="flex items-center justify-between border-b border-[#c89b3c]/30 pb-4">
               <div className="flex items-center gap-2.5">
-                <BellRing className="w-5 h-5 text-[#ffd700] animate-bounce" />
+                <BellRing className="w-5 h-5 text-[#ffd700]" />
                 <span className="font-cinzel font-bold text-lg text-white">
-                  ĐĂNG KÝ NHẬN THÔNG BÁO LIVE
+                  TRẠM THÔNG BÁO TỰ ĐỘNG
                 </span>
               </div>
               <span className="text-[11px] font-rajdhani text-[#ffd700] border border-[#ffd700]/30 px-2 py-0.5 rounded bg-[#ffd700]/10">
-                TỰ ĐỘNG 24/7
+                REAL-TIME PUSH
               </span>
             </div>
 
-            <div className="space-y-4 text-left">
-              <p className="text-gray-300 font-sans text-xs sm:text-sm leading-relaxed">
-                Đừng để lỡ những pha highlight, giờ phát quà skin và các buổi custom. Hãy chọn kênh bạn muốn nhận thông báo khi <strong>{streamerConfig.name}</strong> bấm Live:
-              </p>
-
-              {/* Option 1: Browser Web Push Button */}
-              <div className="p-4 rounded-lg bg-[#010a13] border border-[#c89b3c]/40 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <Bell className={`w-5 h-5 ${webPushEnabled ? 'text-green-400' : 'text-[#00f0ff]'}`} />
-                    <div>
-                      <div className="text-sm font-semibold text-white">
-                        Thông Báo Đẩy Trên Trình Duyệt (Web Push)
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Nhận chuông thông báo ngay trên màn hình khi streamer mở máy Live
-                      </div>
-                    </div>
+            {/* Notification Subscription Content */}
+            <div className="space-y-6 text-left">
+              
+              {/* Push Bell System */}
+              <div className="p-4 bg-[#010a13] border border-[#c89b3c]/40 rounded-lg space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded bg-[#091428] border border-[#00f0ff] flex items-center justify-center shrink-0 text-[#00f0ff]">
+                    {webPushEnabled ? (
+                      <BellRing className="w-5 h-5 text-[#ffd700] animate-bounce" />
+                    ) : (
+                      <Bell className="w-5 h-5" />
+                    )}
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">
+                      Bật Chuông Trình Duyệt (Web Push)
+                    </h4>
+                    <p className="text-xs text-gray-400 leading-relaxed mt-0.5">
+                      Nhận thông báo nổi ngay lập tức trên máy tính hoặc điện thoại mỗi khi streamer bắt đầu bấm máy phát trực tiếp.
+                    </p>
                   </div>
                 </div>
 
+                {notificationMsg && (
+                  <div className="p-2.5 rounded text-xs bg-[#091428] border border-[#00f0ff] text-[#00f0ff]">
+                    {notificationMsg}
+                  </div>
+                )}
+
                 <button
-                  type="button"
                   onClick={handleToggleWebPush}
                   className={`w-full py-2.5 px-4 rounded font-rajdhani font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all ${
                     webPushEnabled
-                      ? 'bg-emerald-950/80 border border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                      : 'hextech-btn-gold shadow-hextech-gold'
+                      ? 'bg-emerald-950/60 border border-emerald-500 text-emerald-400 hover:bg-emerald-900/80 shadow-md'
+                      : 'hextech-btn-gold'
                   }`}
                 >
                   {webPushEnabled ? (
                     <>
                       <CheckCircle className="w-4 h-4 text-emerald-400" />
-                      <span>ĐÃ BẬT CHUÔNG THÔNG BÁO TRÌNH DUYỆT</span>
+                      <span>ĐÃ BẬT CHUÔNG BÁO TRÊN THIẾT BỊ NÀY (NHẤP ĐỂ TẮT)</span>
                     </>
                   ) : (
                     <>
-                      <BellRing className="w-4 h-4 text-black" />
-                      <span>BẬT CHUÔNG THÔNG BÁO 1-CLICK</span>
+                      <Bell className="w-4 h-4 text-[#ffd700]" />
+                      <span>NHẤP ĐỂ BẬT CHUÔNG BÁO TRÌNH DUYỆT</span>
                     </>
                   )}
                 </button>
-
-                {notificationMsg && (
-                  <div className="text-xs text-emerald-400 font-sans text-center pt-1 animate-pulse">
-                    {notificationMsg}
-                  </div>
-                )}
               </div>
 
-              {/* Option 2: Email Alert Subscription Form */}
-              <div className="p-4 rounded-lg bg-[#010a13] border border-[#c89b3c]/40 space-y-3">
-                <div className="text-xs font-semibold text-white flex items-center gap-1.5">
-                  <Send className="w-3.5 h-3.5 text-[#00f0ff]" />
-                  <span>Hoặc nhận thông báo qua Email:</span>
+              {/* Email Alerts Backup */}
+              <div className="p-4 bg-[#010a13] border border-[#c89b3c]/40 rounded-lg space-y-3">
+                <div className="flex items-center gap-2">
+                  <Send className="w-4 h-4 text-[#00f0ff]" />
+                  <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">
+                    Nhận lịch stream qua Email
+                  </h4>
                 </div>
 
                 {emailStatus === 'success' ? (
@@ -336,12 +393,18 @@ export default function SocialHub({ streamerConfig }) {
               </span>
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 
-        {/* Weekly Streaming Schedule */}
-        <div className="hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/60 space-y-6 text-left">
+        {/* Weekly Streaming Schedule with Staggered Motion */}
+        <motion.div 
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/60 space-y-6 text-left"
+        >
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#c89b3c]/30 pb-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded bg-[#010a13] border border-[#ffd700] flex items-center justify-center shadow-hextech-gold">
@@ -363,11 +426,19 @@ export default function SocialHub({ streamerConfig }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <motion.div 
+            variants={scheduleContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+          >
             {streamerConfig.schedule?.map((item, idx) => (
-              <div
+              <motion.div
                 key={idx}
-                className="p-4 rounded-lg bg-[#010a13] border border-[#c89b3c]/30 hover:border-[#00f0ff] transition-all space-y-2 group"
+                variants={scheduleItemVariants}
+                whileHover={{ y: -4, borderColor: 'rgba(0, 240, 255, 0.7)' }}
+                className="p-4 rounded-lg bg-[#010a13] border border-[#c89b3c]/30 transition-all space-y-2 group shadow-md"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-rajdhani font-bold px-2 py-0.5 rounded bg-[#091428] text-[#ffd700] border border-[#ffd700]/30">
@@ -383,13 +454,19 @@ export default function SocialHub({ streamerConfig }) {
                 <div className="text-xs text-gray-400 font-sans leading-relaxed">
                   {item.desc}
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Facebook Community Section */}
-        <div className="hextech-border p-6 sm:p-10 rounded-xl relative overflow-hidden bg-gradient-to-r from-[#010a13] via-[#091428] to-[#010a13]">
+        {/* Facebook Community Section with Motion */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="hextech-border p-6 sm:p-10 rounded-xl relative overflow-hidden bg-gradient-to-r from-[#010a13] via-[#091428] to-[#010a13]"
+        >
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#00f0ff]/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
@@ -450,10 +527,9 @@ export default function SocialHub({ streamerConfig }) {
             </div>
 
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
   );
 }
-
