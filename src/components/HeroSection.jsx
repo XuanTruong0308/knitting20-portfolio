@@ -126,12 +126,6 @@ export default function HeroSection({ streamerConfig }) {
             
             {/* 3D Core Canvas */}
             <HextechCore3D />
-
-            {/* Hint for 3D Interaction */}
-            <div className="absolute bottom-2 bg-[#010a13]/80 border border-[#c89b3c]/40 px-3 py-1 rounded-full text-[11px] font-rajdhani tracking-widest text-[#00f0ff] uppercase shadow-hextech-cyan pointer-events-none flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping" />
-              Kéo chuột để xoay Lõi Hextech 3D
-            </div>
           </div>
 
         </div>
