@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(200, 155, 60, 0.2);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hextech Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #010a13;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #0ac8b9 0%, #c89b3c 100%);
+    border-radius: 4px;
+    border: 1px solid rgba(1, 10, 19, 0.8);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #00f0ff 0%, #ffd700 100%);
+  }
+}
+
+/* Hextech UI Utility Classes */
+.hextech-border {
+  position: relative;
+  border: 1px solid rgba(200, 155, 60, 0.4);
+  background: linear-gradient(135deg, rgba(9, 20, 40, 0.85) 0%, rgba(1, 10, 19, 0.95) 100%);
+  backdrop-filter: blur(12px);
+}
+
+.hextech-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid #c89b3c;
+  border-left: 2px solid #c89b3c;
+  pointer-events: none;
+}
+
+.hextech-border::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid #c89b3c;
+  border-right: 2px solid #c89b3c;
+  pointer-events: none;
+}
+
+.hextech-btn-gold {
+  position: relative;
+  background: linear-gradient(180deg, #1e2328 0%, #111519 100%);
+  border: 1px solid #c89b3c;
+  color: #f0e6d2;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.hextech-btn-gold:hover {
+  border-color: #f0e6d2;
+  box-shadow: 0 0 15px rgba(200, 155, 60, 0.6), inset 0 0 10px rgba(200, 155, 60, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.hextech-btn-cyan {
+  position: relative;
+  background: linear-gradient(180deg, #092635 0%, #04131d 100%);
+  border: 1px solid #0ac8b9;
+  color: #00f0ff;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hextech-btn-cyan:hover {
+  border-color: #00f0ff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.7), inset 0 0 15px rgba(0, 240, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #f0e6d2 0%, #c89b3c 60%, #785a28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-cyan-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #00f0ff 50%, #0ac8b9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scanline effect for stream terminal */
+.scanline {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 240, 255, 0.05) 50%
+  );
+  background-size: 100% 4px;
+}

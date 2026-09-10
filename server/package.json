@@ -1,0 +1,16 @@
+{
+  "name": "tiktok-live-detector",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TikTok Live Detector & Web Push Dispatcher for knitting20",
+  "main": "tiktok-live-service.js",
+  "scripts": {
+    "start": "node tiktok-live-service.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "tiktok-live-connector": "^1.1.8",
+    "web-push": "^3.6.7"
+  }
+}
