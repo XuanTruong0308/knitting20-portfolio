@@ -57,14 +57,6 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
             <Sparkles className="w-4 h-4 text-[#ffd700] animate-pulse" />
             ỦNG HỘ / DONATE
           </a>
-          <a
-            href="#gear"
-            onMouseEnter={() => soundFx.playHover()}
-            onClick={() => soundFx.playClick()}
-            className="text-sm font-rajdhani font-semibold tracking-wider text-gray-300 hover:text-[#00f0ff] transition-colors"
-          >
-            BATTLE STATION
-          </a>
         </nav>
 
         {/* Right Utility Buttons: Live Status & Audio Toggle */}

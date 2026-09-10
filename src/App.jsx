@@ -3,7 +3,6 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import SocialHub from './components/SocialHub';
 import DonateTerminal from './components/DonateTerminal';
-import GearSpecs from './components/GearSpecs';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import { STREAMER_CONFIG } from './config/streamerData';
@@ -58,9 +57,6 @@ export default function App() {
 
         {/* Hextech VietQR Donate Terminal */}
         <DonateTerminal streamerConfig={currentConfig} />
-
-        {/* Battle Station & Gaming Gear */}
-        <GearSpecs />
       </main>
 
       {/* Footer */}
