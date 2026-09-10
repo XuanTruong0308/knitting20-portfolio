@@ -24,10 +24,12 @@ export default {
         }
       },
       fontFamily: {
-        cinzel: ['"Cinzel"', 'serif'],
-        orbitron: ['"Orbitron"', 'sans-serif'],
-        rajdhani: ['"Rajdhani"', 'sans-serif'],
-        sans: ['"Inter"', 'sans-serif'],
+        heading: ['"Montserrat"', '"Be Vietnam Pro"', 'sans-serif'],
+        cinzel: ['"Montserrat"', '"Be Vietnam Pro"', 'sans-serif'], // Aliased for heading backward-compatibility
+        orbitron: ['"Chakra Petch"', '"Montserrat"', 'sans-serif'], // Sci-fi & Gaming stats font
+        rajdhani: ['"Chakra Petch"', '"Be Vietnam Pro"', 'sans-serif'], // Badges & UI font
+        chakra: ['"Chakra Petch"', 'sans-serif'],
+        sans: ['"Be Vietnam Pro"', '"Inter"', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         'hextech-cyan': '0 0 20px rgba(0, 240, 255, 0.35), inset 0 0 15px rgba(0, 240, 255, 0.15)',

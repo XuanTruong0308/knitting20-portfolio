@@ -26,6 +26,12 @@
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #00f0ff 0%, #ffd700 100%);
   }
+
+  body {
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 /* Hextech UI Utility Classes */
@@ -65,7 +71,8 @@
   background: linear-gradient(180deg, #1e2328 0%, #111519 100%);
   border: 1px solid #c89b3c;
   color: #f0e6d2;
-  font-family: 'Cinzel', serif;
+  font-family: 'Montserrat', 'Be Vietnam Pro', sans-serif;
+  font-weight: 700;
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
@@ -83,7 +90,7 @@
   background: linear-gradient(180deg, #092635 0%, #04131d 100%);
   border: 1px solid #0ac8b9;
   color: #00f0ff;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Chakra Petch', sans-serif;
   font-weight: 700;
   letter-spacing: 0.05em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
