@@ -23,7 +23,9 @@
     "react-dom": "^19.2.8",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^3.4.17",
-    "three": "^0.185.1"
+    "three": "^0.185.1",
+    "tiktok-live-connector": "^1.1.8",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
