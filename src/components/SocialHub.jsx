@@ -3,8 +3,6 @@ import {
   Radio, 
   Bell, 
   BellRing, 
-  Calendar, 
-  Clock, 
   Sparkles, 
   ExternalLink, 
   CheckCircle, 
@@ -24,25 +22,6 @@ const cardVariants = {
     opacity: 1, 
     y: 0,
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-  }
-};
-
-const scheduleContainerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    }
-  }
-};
-
-const scheduleItemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' }
   }
 };
 
@@ -175,7 +154,7 @@ export default function SocialHub({ streamerConfig }) {
             TRẠNG THÁI LIVE & <span className="text-cyan-gradient">ĐĂNG KÝ THÔNG BÁO</span>
           </h2>
           <p className="text-gray-400 font-sans text-sm sm:text-base">
-            Theo dõi phòng phát sóng trực tiếp TikTok của <strong>{streamerConfig.name}</strong> (@{streamerConfig.tiktokUsername}) và đăng ký nhận chuông báo tự động để không bỏ lỡ những trận leo rank căng thẳng.
+            Theo dõi phòng phát sóng trực tiếp TikTok của <strong>{streamerConfig.name}</strong> (@{streamerConfig.tiktokUsername}) và đăng ký nhận chuông báo tự động để không bỏ lỡ các buổi livestream.
           </p>
         </motion.div>
 
@@ -213,7 +192,7 @@ export default function SocialHub({ streamerConfig }) {
                   ? 'bg-red-950/60 text-red-400 border border-red-500/50 animate-pulse'
                   : 'bg-[#010a13] text-gray-400 border border-gray-700'
               }`}>
-                {streamerConfig.isLive ? '🔴 ĐANG PHÁT SÓNG' : '⚪ ĐANG NGHỈ NGƠI'}
+                {streamerConfig.isLive ? '🔴 ĐANG PHÁT SÓNG' : '⚪ CHƯA LÊN SÓNG'}
               </div>
             </div>
 
@@ -233,24 +212,14 @@ export default function SocialHub({ streamerConfig }) {
                 <div className="text-base font-cinzel font-bold text-white flex items-center justify-center gap-2">
                   <span>{streamerConfig.name}</span>
                   <span className="text-xs font-mono text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10 border border-[#00f0ff]/30">
-                    {streamerConfig.role}
+                    {streamerConfig.title}
                   </span>
                 </div>
                 <p className="text-xs text-gray-400 max-w-md mx-auto leading-relaxed">
                   {streamerConfig.isLive 
-                    ? 'Streamer đang livestream trực tiếp leo rank Thách Đấu trên TikTok! Vào xem và giao lưu ngay.'
-                    : 'Phát sóng đều đặn mỗi tối từ 20:00 - 23:30. Hãy bấm vào nút bên dưới để chuyển thẳng sang kênh TikTok.'}
+                    ? 'Streamer đang phát sóng trực tiếp trên TikTok! Nhấp vào nút bên dưới để vào xem và giao lưu ngay.'
+                    : 'Kênh TikTok chính thức của streamer. Bạn có thể nhấn nút bên dưới để chuyển thẳng sang kênh xem video hoặc bật chuông nhận thông báo khi lên sóng.'}
                 </p>
-              </div>
-
-              {/* In-Game Tag Badges */}
-              <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-rajdhani">
-                <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
-                  <span className="text-gray-500">MÁY CHỦ:</span> <strong className="text-[#ffd700]">VIỆT NAM</strong>
-                </div>
-                <div className="p-2 rounded bg-[#091428] border border-[#c89b3c]/20 text-gray-300">
-                  <span className="text-gray-500">BẬC RANK:</span> <strong className="text-[#00f0ff]">THÁCH ĐẤU</strong>
-                </div>
               </div>
             </div>
 
@@ -265,9 +234,9 @@ export default function SocialHub({ streamerConfig }) {
                 className="w-full hextech-btn-cyan py-3.5 px-6 rounded text-center font-bold text-sm flex items-center justify-center gap-2.5 shadow-hextech-cyan group"
               >
                 <svg className="w-4 h-4 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
                 </svg>
-                <span>CHUYỂN ĐẾN PHÒNG STREAM TIKTOK</span>
+                <span>CHUYỂN ĐẾN KÊNH TIKTOK</span>
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>
@@ -314,7 +283,7 @@ export default function SocialHub({ streamerConfig }) {
                       Bật Chuông Trình Duyệt (Web Push)
                     </h4>
                     <p className="text-xs text-gray-400 leading-relaxed mt-0.5">
-                      Nhận thông báo nổi ngay lập tức trên máy tính hoặc điện thoại mỗi khi streamer bắt đầu bấm máy phát trực tiếp.
+                      Nhận thông báo nổi ngay lập tức trên máy tính hoặc điện thoại mỗi khi streamer bắt đầu phát trực tiếp.
                     </p>
                   </div>
                 </div>
@@ -352,14 +321,14 @@ export default function SocialHub({ streamerConfig }) {
                 <div className="flex items-center gap-2">
                   <Send className="w-4 h-4 text-[#00f0ff]" />
                   <h4 className="text-xs font-bold text-gray-200 uppercase tracking-wider">
-                    Nhận lịch stream qua Email
+                    Nhận thông báo qua Email
                   </h4>
                 </div>
 
                 {emailStatus === 'success' ? (
                   <div className="p-3 rounded bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 text-xs text-center flex items-center justify-center gap-2">
                     <CheckCircle className="w-4 h-4" />
-                    <span>Đã đăng ký email thành công! Bạn sẽ nhận thông báo khi lên sóng.</span>
+                    <span>Đã đăng ký email thành công! Bạn sẽ nhận thông báo khi có thông tin mới.</span>
                   </div>
                 ) : (
                   <form onSubmit={handleEmailSubscribe} className="flex gap-2">
@@ -397,68 +366,6 @@ export default function SocialHub({ streamerConfig }) {
 
         </div>
 
-        {/* Weekly Streaming Schedule with Staggered Motion */}
-        <motion.div 
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6 }}
-          className="hextech-border p-6 sm:p-8 rounded-xl bg-[#091428]/60 space-y-6 text-left"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#c89b3c]/30 pb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded bg-[#010a13] border border-[#ffd700] flex items-center justify-center shadow-hextech-gold">
-                <Calendar className="w-5 h-5 text-[#ffd700]" />
-              </div>
-              <div>
-                <h3 className="text-xl sm:text-2xl font-cinzel font-bold text-white">
-                  LỊCH PHÁT SÓNG LIVESTREAM DỰ KIẾN
-                </h3>
-                <p className="text-xs text-gray-400 font-sans">
-                  Khung giờ lên sóng cố định hàng tuần trên kênh TikTok @{streamerConfig.tiktokUsername}
-                </p>
-              </div>
-            </div>
-
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#010a13] border border-[#00f0ff]/30 text-xs font-rajdhani text-[#00f0ff]">
-              <Clock className="w-3.5 h-3.5" />
-              <span>GIỜ VIỆT NAM (GMT+7)</span>
-            </div>
-          </div>
-
-          <motion.div 
-            variants={scheduleContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4"
-          >
-            {streamerConfig.schedule?.map((item, idx) => (
-              <motion.div
-                key={idx}
-                variants={scheduleItemVariants}
-                whileHover={{ y: -4, borderColor: 'rgba(0, 240, 255, 0.7)' }}
-                className="p-4 rounded-lg bg-[#010a13] border border-[#c89b3c]/30 transition-all space-y-2 group shadow-md"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-rajdhani font-bold px-2 py-0.5 rounded bg-[#091428] text-[#ffd700] border border-[#ffd700]/30">
-                    {item.day}
-                  </span>
-                  <span className="text-sm font-orbitron font-bold text-[#00f0ff]">
-                    {item.time}
-                  </span>
-                </div>
-                <div className="text-sm font-semibold text-white group-hover:text-[#00f0ff] transition-colors">
-                  {item.type}
-                </div>
-                <div className="text-xs text-gray-400 font-sans leading-relaxed">
-                  {item.desc}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-
         {/* Facebook Community Section with Motion */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.96 }}
@@ -480,18 +387,18 @@ export default function SocialHub({ streamerConfig }) {
                 GIA NHẬP <span className="text-gold-gradient">FACEBOOK CHÍNH THỨC</span>
               </h3>
               <p className="text-gray-300 font-sans text-sm sm:text-base leading-relaxed">
-                Kết nối với <strong>HUYNH VAN DANG ({streamerConfig.name})</strong> trên Facebook để cùng thảo luận meta LMHT, nhận thông báo sự kiện, tham gia kèo giao lưu và mini game tặng quà hàng tuần!
+                Kết nối với <strong>HUYNH VAN DANG ({streamerConfig.name})</strong> trên Facebook để cùng theo dõi cập nhật, giao lưu và thảo luận cùng cộng đồng người hâm mộ!
               </p>
 
               {/* Fanpage verified perks */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-rajdhani text-gray-300">
                   <CheckCircle className="w-4 h-4 text-[#00f0ff]" />
-                  <span>Cập nhật nhanh lịch stream & thông báo đột xuất</span>
+                  <span>Cập nhật nhanh thông tin & sự kiện mới</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-rajdhani text-gray-300">
                   <CheckCircle className="w-4 h-4 text-[#00f0ff]" />
-                  <span>Giao lưu, đánh rank và tham gia giải đấu solo</span>
+                  <span>Giao lưu trực tiếp cùng streamer và viewer</span>
                 </div>
               </div>
             </div>
@@ -520,7 +427,7 @@ export default function SocialHub({ streamerConfig }) {
                 className="px-6 py-3 rounded text-center font-rajdhani font-bold text-sm text-[#00f0ff] border border-[#00f0ff]/40 bg-[#091428]/80 hover:bg-[#00f0ff]/10 transition-colors flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4 fill-[#00f0ff]" viewBox="0 0 24 24">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.52a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3 15.28a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.72a8.28 8.28 0 0 0 4.91 1.6V6.87a4.86 4.86 0 0 1-1-.18z"/>
                 </svg>
                 <span>THEO DÕI KÊNH TIKTOK</span>
               </a>

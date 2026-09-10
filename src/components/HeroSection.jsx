@@ -46,12 +46,12 @@ export default function HeroSection({ streamerConfig }) {
             className="lg:col-span-7 space-y-6 text-left"
           >
             
-            {/* Rank Challenger & Role Tag */}
+            {/* Role & Game Tag */}
             <motion.div variants={itemVariants} className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-sm hextech-border">
               <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
               <div className="flex items-center gap-2 text-xs font-rajdhani font-bold tracking-widest text-[#00f0ff] uppercase">
                 <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
-                THÁCH ĐẤU VIỆT NAM (1,240 LP) • TOP LANER
+                LEAGUE OF LEGENDS • TOP LANER
               </div>
             </motion.div>
 
@@ -110,34 +110,6 @@ export default function HeroSection({ streamerConfig }) {
                 <Heart className="w-4 h-4 text-red-500 fill-current animate-pulse" />
                 <span>ỦNG HỘ STREAMER</span>
               </a>
-            </motion.div>
-
-            {/* Live Metrics Grid */}
-            <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#c89b3c]/20">
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#00f0ff]/50 transition-colors">
-                <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#00f0ff]">
-                  {streamerConfig.stats.tiktokFollowers}
-                </div>
-                <div className="text-[11px] font-rajdhani uppercase text-gray-400">TikTok Followers</div>
-              </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#ffd700]/50 transition-colors">
-                <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#f0e6d2]">
-                  {streamerConfig.stats.winRate}
-                </div>
-                <div className="text-[11px] font-rajdhani uppercase text-gray-400">Tỉ Lệ Thắng Ranked</div>
-              </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#ffd700]/50 transition-colors">
-                <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#ffd700]">
-                  {streamerConfig.stats.pentakills}
-                </div>
-                <div className="text-[11px] font-rajdhani uppercase text-gray-400">Pha Pentakill</div>
-              </div>
-              <div className="p-3 bg-[#091428]/60 border border-[#c89b3c]/20 rounded hover:border-[#0ac8b9]/50 transition-colors">
-                <div className="text-xl sm:text-2xl font-orbitron font-bold text-[#0ac8b9]">
-                  {streamerConfig.stats.kda}
-                </div>
-                <div className="text-[11px] font-rajdhani uppercase text-gray-400">KDA Trung Bình</div>
-              </div>
             </motion.div>
 
           </motion.div>

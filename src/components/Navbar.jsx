@@ -32,7 +32,7 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
               KNITTING20 <span className="text-xs px-1.5 py-0.5 rounded bg-[#0ac8b9]/20 text-[#00f0ff] border border-[#0ac8b9]/40 font-rajdhani font-semibold">PRO</span>
             </div>
             <div className="text-[10px] font-rajdhani uppercase tracking-wider text-gray-400">
-              LOL Streamer & Challenger Top Lane
+              LOL Streamer & Top Laner
             </div>
           </div>
         </a>
@@ -68,7 +68,7 @@ export default function Navbar({ isLive = true, soundEnabled, setSoundEnabled })
               : 'bg-[#091428] text-gray-300 border-[#c89b3c]/30'
           }`}>
             <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-red-500 animate-ping' : 'bg-gray-400'}`} />
-            {isLive ? '🔴 ĐANG LIVESTREAM' : '⚪ OFFLINE (LỊCH: 20:00)'}
+            {isLive ? '🔴 ĐANG PHÁT SÓNG' : '⚪ ĐANG OFFLINE'}
           </div>
 
           {/* Sound FX Switcher */}
